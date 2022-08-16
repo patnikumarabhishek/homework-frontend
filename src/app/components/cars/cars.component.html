@@ -1,0 +1,63 @@
+<div class="main-container">
+  <mat-toolbar color="primary">
+    <span>Cars of {{ name | titlecase }}</span>
+    <span class="spacer"></span>
+  </mat-toolbar>
+
+  <div class="container">
+    <div class="form">
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input
+          matInput
+          #filter
+          (keyup)="searchCars($event)"
+          placeholder="Filter cars"
+        />
+      </mat-form-field>
+    </div>
+    <mat-table
+      #table
+      [dataSource]="filteredDataSource"
+      matSort
+      (matSortChange)="sortChange($event)"
+      class="mat-cell"
+    >
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="make">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Make</mat-header-cell
+        >
+        <mat-cell *matCellDef="let row"> {{ row.make }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="model">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Model</mat-header-cell
+        >
+        <mat-cell *matCellDef="let row"> {{ row.model }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="numberplate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Number Plate</mat-header-cell
+        >
+        <mat-cell *matCellDef="let row"> {{ row.numberplate }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <div
+      class="no-results"
+      [style.display]="filteredDataSource.length == 0 ? '' : 'none'"
+    >
+      No results
+    </div>
+  </div>
+</div>
